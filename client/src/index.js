@@ -16,14 +16,29 @@ import {
   ClearCurrentProfile
 } from "./actions/index";
 
-const store = createStore(
-  reducers,
-  {},
-  compose(
-    applyMiddleware(reduxThunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+// const store = createStore(
+//   reducers,
+//   {},
+//   compose(
+//     applyMiddleware(reduxThunk),
+//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+//   )
+// );
+let store;
+
+if (process.env.NODE_ENV === "production") {
+  store = createStore(reducers, {}, compose(applyMiddleware(reduxThunk)));
+} else {
+  store = createStore(
+    reducers,
+    {},
+    compose(
+      applyMiddleware(reduxThunk),
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  );
+}
 
 //this makes sure that the token, if user is signed in, should make our redux state isAuthenticated a true and user object to filled
 if (localStorage.jwtToken) {
