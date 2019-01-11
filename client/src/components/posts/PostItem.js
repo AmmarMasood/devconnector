@@ -66,7 +66,10 @@ class PostItem extends Component {
                 </button>
                 {/*this will take us to the single post so we can add like and comment*/}
                 <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
-                  Comments
+                  Comments{" "}
+                  <span className="badge badge-light">
+                    {post.comments.length}
+                  </span>
                 </Link>
                 {post._user === auth.user.id ? (
                   <button
